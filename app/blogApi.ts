@@ -18,7 +18,8 @@ export const blogApi = createApi({
   tagTypes: ["Blogs", "Blog"],
   endpoints: (builder) => ({
     getBlogs: builder.query<Blogs, void>({
-      async queryFn(_arg, _queryApi, _extraOptions, fetchWithBQ) {
+      // @ts-ignore
+      queryFn: async (arg, queryApi, extraOptions, fetchWithBQ) => {
         const { data: blogs, error } = await supabase.from("posts").select("*");
         if (blogs?.length) {
           const data = blogs as Blog[];
@@ -34,7 +35,8 @@ export const blogApi = createApi({
           : [{ type: "Blogs", id: "LIST" }],
     }),
     deleteBlog: builder.mutation<Blog, string>({
-      async queryFn(_arg, _queryApi, _extraOptions, fetchWithBQ) {
+      // @ts-ignore
+      queryFn: async (_arg, _queryApi, _extraOptions, fetchWithBQ) => {
         const { data, error } = await supabase
           .from("posts")
           .delete()
@@ -49,7 +51,8 @@ export const blogApi = createApi({
       invalidatesTags: ["Blogs"],
     }),
     addBlog: builder.mutation<void, Partial<Blog>>({
-      async queryFn(_arg, _queryApi, _extraOptions, fetchWithBQ) {
+      // @ts-ignore
+      queryFn: async (_arg, _queryApi, _extraOptions, fetchWithBQ) => {
         const { data, error } = await supabase.from("posts").insert([
           {
             title: _arg.title,

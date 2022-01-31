@@ -31,7 +31,7 @@ export default function Home({}: { blogs?: TBlog[] }) {
     if (!supabase.auth.user()) {
       router.push("/login");
     }
-  }, []);
+  }, [router]);
 
   if (!supabase.auth.user()) return null;
 
