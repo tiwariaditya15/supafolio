@@ -5,9 +5,13 @@ export default function LogIn(): JSX.Element {
   const login = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      // @ts-ignore
-      await supabase.auth.signIn({ email: event.target.email.value });
-      alert("Check your email box!!");
+      try {
+        // @ts-ignore
+        await supabase.auth.signIn({ email: event.target.email.value });
+        alert("Check your email box!!");
+      } catch (error) {
+        console.log({ error });
+      }
     } catch (error) {
       alert("Something went erong! Try again!");
     }
