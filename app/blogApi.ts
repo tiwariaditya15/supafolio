@@ -50,18 +50,14 @@ export const blogApi = createApi({
     }),
     addBlog: builder.mutation<void, Partial<Blog>>({
       async queryFn(_arg, _queryApi, _extraOptions, fetchWithBQ) {
-        console.log({ _arg });
-        const { data, error } = await supabase.from("posts").insert(
-          [
-            {
-              title: _arg.title,
-              content: _arg.content,
-              is_published: true,
-            },
-          ],
-          { returning: "minimal" }
-        );
-        if (data?.length) {
+        const { data, error } = await supabase.from("posts").insert([
+          {
+            title: _arg.title,
+            content: _arg.content,
+            is_published: true,
+          },
+        ]);
+        if (data) {
           return { data };
         }
 
